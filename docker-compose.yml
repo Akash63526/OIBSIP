@@ -1,0 +1,63 @@
+# Docker Compose - Phase 15
+version: '3.8'
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:7
+    container_name: pizza_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - pizza_network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: pizza_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - pizza_network
+
+  # Backend
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pizza_server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - pizza_network
+
+  # Frontend
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: pizza_client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - pizza_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  pizza_network:
+    driver: bridge

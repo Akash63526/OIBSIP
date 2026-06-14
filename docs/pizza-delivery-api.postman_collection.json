@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "c1a2f3b4-7d8e-4f9a-8b0c-1d2e3f4a5b6c",
+		"name": "🍕 Pizza Delivery System API",
+		"description": "Comprehensive API collection for testing the full-stack MERN Pizza Delivery application. Connects to `http://localhost:5001/api` by default.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"Password123!\",\n    \"phone\": \"9876543210\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"if (responseJson && responseJson.data && responseJson.data.accessToken) {",
+									"    pm.collectionVariables.set(\"accessToken\", responseJson.data.accessToken);",
+									"    console.log(\"Saved Access Token:\", responseJson.data.accessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"Password123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Pizzas (Menu)",
+			"item": [
+				{
+					"name": "Get All Pizzas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pizzas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pizzas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pizza by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pizzas/PIZZA_ID_HERE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pizzas",
+								"PIZZA_ID_HERE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"pizza\": \"REPLACE_WITH_PIZZA_ID\",\n            \"quantity\": 2,\n            \"size\": \"medium\",\n            \"crust\": \"classic\"\n        }\n    ],\n    \"deliveryAddress\": {\n        \"street\": \"123 Pizza Street\",\n        \"city\": \"Naples\",\n        \"state\": \"Campania\",\n        \"zipCode\": \"80100\"\n    },\n    \"paymentMethod\": \"cash\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/my-orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"my-orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/ORDER_ID_HERE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"ORDER_ID_HERE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Payments",
+			"item": [
+				{
+					"name": "Create Razorpay Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 599\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments/create-order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								"create-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Razorpay Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"razorpayOrderId\": \"order_9A12345B\",\n    \"razorpayPaymentId\": \"pay_9A12345B\",\n    \"razorpaySignature\": \"sig_abcdef123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments/verify",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Admin Tasks",
+			"item": [
+				{
+					"name": "Admin - Get All Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin - Update Order Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"preparing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/orders/ORDER_ID_HERE/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"orders",
+								"ORDER_ID_HERE",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6. Inventory Tasks",
+			"item": [
+				{
+					"name": "Inventory - Get Alerts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/inventory/alerts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"inventory",
+								"alerts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inventory - Restock Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ingredientName\": \"Cheese\",\n    \"quantity\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/inventory/restock",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"inventory",
+								"restock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5001/api",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
