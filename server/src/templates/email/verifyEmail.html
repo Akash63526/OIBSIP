@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Your Email — SliceSprint</title>
+</head>
+<body style="margin:0;padding:0;background-color:#FFF7ED;font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFF7ED;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.06);">
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#FF6B00 0%,#FF4C00 100%);padding:36px 40px;text-align:center;">
+              <h1 style="margin:0;color:#FFFFFF;font-size:28px;font-weight:800;letter-spacing:-0.5px;">🍕 SliceSprint</h1>
+              <p style="margin:8px 0 0;color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;">Verify your email address</p>
+            </td>
+          </tr>
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+              <h2 style="margin:0 0 12px;color:#1F2937;font-size:22px;font-weight:800;">Welcome, {{userName}}! 👋</h2>
+              <p style="margin:0 0 28px;color:#6B7280;font-size:15px;line-height:1.7;">
+                Thank you for creating your SliceSprint account. Please verify your email address by clicking the button below. This link is valid for <strong>24 hours</strong>.
+              </p>
+              <!-- CTA Button -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{verifyUrl}}" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#FF6B00 0%,#FF4C00 100%);color:#FFFFFF;text-decoration:none;padding:16px 48px;border-radius:16px;font-size:15px;font-weight:800;letter-spacing:0.3px;box-shadow:0 4px 14px rgba(255,76,0,0.3);">
+                      Verify Email Address
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:28px 0 0;color:#9CA3AF;font-size:13px;line-height:1.6;text-align:center;">
+                If the button doesn't work, copy and paste this link into your browser:<br/>
+                <a href="{{verifyUrl}}" style="color:#FF6B00;word-break:break-all;">{{verifyUrl}}</a>
+              </p>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px;background-color:#FAFBFC;border-top:1px solid #F3F4F6;text-align:center;">
+              <p style="margin:0;color:#9CA3AF;font-size:12px;">
+                If you didn't create an account with SliceSprint, you can safely ignore this email.
+              </p>
+              <p style="margin:8px 0 0;color:#D1D5DB;font-size:11px;">© {{year}} SliceSprint. All rights reserved.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
